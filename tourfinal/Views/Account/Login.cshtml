@@ -1,0 +1,73 @@
+﻿@model tourfinal.Models.User
+
+@{
+    ViewBag.Title = "Login";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - My ASP.NET Application</title>
+    <link href="~/Content/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <script src="~/Scripts/jquery-1.10.2.min.js"></script>
+    <script src="~/Scripts/jquery.validate.min.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h2>Login</h2>
+       
+         @if (TempData["ErrorMessage"] != null)
+        {
+            <script>
+        $(document).ready(function () {
+            $("#errorMessage").text("@TempData["ErrorMessage"]");
+            $("#errorMessage").fadeIn();
+            setTimeout(function () {
+                $("#errorMessage").fadeOut();
+            }, 3000);
+        });
+            </script>
+        }
+        <div id="errorMessage" style="display:none; color:red;"></div>
+
+        @using (Html.BeginForm("Login", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+        {
+            @Html.AntiForgeryToken()
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.UserName, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.UserName, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.UserName, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Password, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Password, new { htmlAttributes = new { @class = "form-control" } })
+                    @Html.ValidationMessageFor(model => model.Password, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div class="col-md-offset-2 col-md-10">
+                    <input type="submit" value="Login" class="btn btn-success" />
+                </div>
+            </div>
+
+        }
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <p>Don't have an account yet? <a href="@Url.Action("Signup", "Account")">Sign up</a></p>
+                <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+            </div>
+        </div>
+    </div>
+</body>
+</html>
